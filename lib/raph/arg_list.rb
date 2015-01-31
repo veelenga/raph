@@ -2,11 +2,9 @@ module Raph
   class ArgList
     attr_reader :all, :files, :flags
 
-    def initialize(args)
+    def initialize(args=nil)
       @args = args
     end
-
-    private
 
     def parse
       @args.each do
@@ -22,7 +20,7 @@ module Raph
     # Assumes that option doesn't have spaces.
     #
     # Example of flags:
-    #   '-h' '-text' '--config'
+    #   '-h' '-T' '--config'
     #
     # Example of non-flags:
     #   'option' '---option2' '--h'
@@ -33,7 +31,3 @@ module Raph
 end
 
 raph = Raph::ArgList.new(ARGV)
-p ARGV
-puts "All args: #{raph.all}"
-puts "Files   : #{raph.files}"
-puts "Flags   : #{raph.flags}"

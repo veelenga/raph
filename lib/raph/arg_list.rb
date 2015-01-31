@@ -27,7 +27,7 @@ module Raph
     # Example of non-flags:
     #   'option' '---option2' '--h'
     def flag?(option)
-      option =~ /^-[\w]$/ or option =~ /^--[\w-]{2,}$/
+      option =~ /^-[\w]$/ or option =~ /^--[\w][\w-]+$/
     end
   end
 end

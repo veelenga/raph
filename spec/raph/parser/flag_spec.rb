@@ -5,7 +5,7 @@ module Raph
     describe Flag do
       describe '#id' do
         it 'is not nil' do
-          expect(Flag.new('arg').parse).not_to be nil
+          expect(Flag.new([]).parse).not_to be nil
         end
       end
     end

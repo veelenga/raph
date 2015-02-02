@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/veelenga/raph.svg?branch=master)](https://travis-ci.org/veelenga/raph)
+
 # raph
 
 ![It's Raph]

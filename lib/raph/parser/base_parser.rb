@@ -1,10 +1,14 @@
 module Raph
+  # This module consists of argument parsers for Humans
   module Parser
-    # Base class for all argument parsers
+    # Argument base class for all argument parsers
+    #
+    # You can create a custom formatter by subclassing
+    # `Raph::Parser::BaseParser` and overriding some methods,
+    # or by implementing all the methods by duch typing.
     class BaseParser
-
-      # Unique id of parser
-      def id
+      # Unique id of each parser.
+      def self.id
         'base'
       end
 

@@ -26,9 +26,9 @@ module Raph
       end
 
       describe '#flag?' do
-        let (:subj) { Flag.new(['opt1', '-h']) }
+        let(:subj) { Flag.new(['opt1', '-h']) }
 
-        def flag? option
+        def flag?(option)
           !subj.send(:flag?, option).nil?
         end
 

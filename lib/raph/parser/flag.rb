@@ -13,7 +13,6 @@ module Raph
     # Example of non-flags:
     #   'option' '---option2' '--h'
     class Flag < BaseParser
-
       attr_reader :flags
 
       def initialize(args)
@@ -23,20 +22,19 @@ module Raph
       def parse
         @flags = []
         @args.each do |a|
-          if flag? a
-            flags << a
-          end
+          flags << a if flag? a
         end
+        @flags
       end
 
-      def id
+      def self.id
         'flags'
       end
 
       private
 
       def flag?(option)
-        option =~ /^-[\w]$/ or option =~ /^--[\w][\w-]+$/
+        option =~ /^-[\w]$/ || option =~ /^--[\w][\w-]+$/
       end
     end
   end

@@ -12,7 +12,7 @@ module Raph
     #
     # Example of non-flags:
     #   'option' '---option2' '--h'
-    class Flag < BaseParser
+    class FlagParser < BaseParser
       attr_reader :flags
 
       def initialize(args)

@@ -2,31 +2,31 @@ require 'spec_helper'
 
 module Raph
   module Parser
-    describe Flag do
+    describe FlagParser do
       describe '#id' do
         it 'is not nil' do
-          expect(Flag.id).not_to be nil
+          expect(FlagParser.id).not_to be nil
         end
 
         it 'is always the same' do
-          expect(Flag.id).to eq(Flag.id)
+          expect(FlagParser.id).to eq(FlagParser.id)
         end
       end
 
       describe '#parse' do
         it 'finds flags only' do
-          expect(Flag.new(['-h', '-9', '123', '--config', 'config.xml']).parse)\
+          expect(FlagParser.new(['-h', '-9', '123', '--config', 'config.xml']).parse)\
             .to match_array(['-h', '-9', '--config'])
         end
 
         it 'has no flags here' do
-          expect(Flag.new(['true', '-', '123']).parse).to match_array([])
-          expect(Flag.new([]).parse).to match_array([])
+          expect(FlagParser.new(['true', '-', '123']).parse).to match_array([])
+          expect(FlagParser.new([]).parse).to match_array([])
         end
       end
 
       describe '#flag?' do
-        let(:subj) { Flag.new(['opt1', '-h']) }
+        let(:subj) { FlagParser.new(['opt1', '-h']) }
 
         def flag?(option)
           !subj.send(:flag?, option).nil?

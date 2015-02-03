@@ -7,11 +7,6 @@ module Raph
     # `Raph::Parser::BaseParser` and overriding some methods,
     # or by implementing all the methods by duch typing.
     class BaseParser
-      # Unique id of each parser.
-      def self.id
-        'base'
-      end
-
       # Parses arguments (depends on implementation).
       # Returns results of parsing.
       def parse

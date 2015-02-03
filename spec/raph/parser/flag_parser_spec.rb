@@ -3,19 +3,10 @@ require 'spec_helper'
 module Raph
   module Parser
     describe FlagParser do
-      describe '#id' do
-        it 'is not nil' do
-          expect(FlagParser.id).not_to be nil
-        end
-
-        it 'is always the same' do
-          expect(FlagParser.id).to eq(FlagParser.id)
-        end
-      end
-
       describe '#parse' do
         it 'finds flags only' do
-          expect(FlagParser.new(['-h', '-9', '123', '--config', 'config.xml']).parse)\
+          expect(FlagParser.new(['-h', '-9', '123',
+                                 '--config', 'config.xml']).parse)\
             .to match_array(['-h', '-9', '--config'])
         end
 

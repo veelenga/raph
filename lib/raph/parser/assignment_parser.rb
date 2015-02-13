@@ -1,3 +1,5 @@
+require 'raph/parser/assignment_parser'
+
 module Raph
   module Parser
     # Considers option as assignment if and only if

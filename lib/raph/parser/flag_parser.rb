@@ -1,3 +1,5 @@
+require 'raph/parser/base_parser'
+
 module Raph
   module Parser
     # Considers option as flag if and only if

@@ -3,64 +3,54 @@ require 'fileutils'
 
 module Raph
   describe Raph do
-    let(:flags) { ['-h', '--flag'] }
-    let(:assignments) { ['-a=1', '--ass=2'] }
-    let(:files) { ['test1.rb', 'test2.rb'] }
-    let(:no_args) { ['-notaflag', '--h'] }
 
-    let(:args) { flags + assignments + files + no_args}
+    class NumberParser
+      attr_accessor :id, :max
 
-    it 'has global variable' do
+      def initialize(id, max=100)
+        @id = id
+        @max = max
+      end
+
+      def parse(args)
+        args.select { |x| x <= max }
+      end
+    end
+
+    describe '#parse' do
+      let (:numbers) { (1..100) }
+      let (:parser1) { NumberParser.new(:first, 5) }
+      let (:parser2) { NumberParser.new(:second, 6) }
+
+      it 'should parse nothing if parsers not added' do
+        raph = Raph.new.tap { |r| r.parse numbers }
+        expect(raph.all).to match_array numbers
+      end
+
+      it 'should have correspoding attribute if parser added' do
+        raph = Raph.new.tap do |r|
+          r.add_parser(parser1)
+          r.add_parser(parser2)
+          r.parse(numbers)
+        end
+        expect(raph.all).to match_array numbers
+        expect(raph.send(parser1.id)).to match_array (1..parser1.max)
+        expect(raph.send(parser2.id)).to match_array (1..parser2.max)
+      end
+    end
+  end
+
+  context 'when we include Raph' do
+    it 'loads global variable' do
+      expect($raph).to be_a Raph
+    end
+
+    it 'has proper attributes' do
       raph = $raph
-      expect(raph).not_to be nil
-      expect(raph).to be_a Raph
-    end
-
-    context "when raph is created with non-args" do
-      let(:raph) { Raph.new(no_args) }
-
-      it 'does not return flags' do
-        expect(raph.flags).to be_empty
-      end
-
-      it 'does not return assignments' do
-        expect(raph.assignments).to be_empty
-      end
-
-      it 'does not return files' do
-        expect(raph.files).to be_empty
-      end
-    end
-
-    context 'when raph is created with args' do
-      let(:raph) { Raph.new(args) }
-
-      it 'parses flags' do
-        expect(raph.flags).to match_array(flags)
-      end
-
-      it 'parses assignments' do
-        expect(raph.assignments).to match_array(assignments)
-      end
-
-      context 'when files exist' do
-        before do
-          files.each do |name|
-            FileUtils.touch name
-          end
-        end
-
-        after do
-          files.each do |name|
-            FileUtils.rm_r name
-          end
-        end
-
-        it 'detects those files' do
-          expect(raph.files).to match_array(files)
-        end
-      end
-
+      expect(raph.all).not_to be nil
+      expect(raph.send(FlagParser.new.id)).not_to be nil
+      expect(raph.send(FileParser.new.id)).not_to be nil
+      expect(raph.send(AssignmentParser.new.id)).not_to be nil
     end
   end
 end

@@ -11,14 +11,10 @@ module Raph
     #  '*.rb' - all files in current directory with extension 'rb'
     #  '**/*.xml' - all files in current directory and directories
     #             that are in this directory with extension 'xml'
-    class FileParser
-      def initialize(args)
-        @args = args
-      end
-
-      def parse
+    class FileParser < BaseParser
+      def parse(args)
         files = []
-        @args.each do |a|
+        args.each do |a|
           files.concat Dir[a]
         end
         files.uniq

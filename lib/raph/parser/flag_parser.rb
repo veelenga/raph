@@ -15,19 +15,13 @@ module Raph
     # Example of non-flags:
     #   'option' '---option2' '--h'
     class FlagParser < BaseParser
-      def initialize(args)
-        @args = args
-      end
-
-      def parse
+      def parse(args)
         flags = []
-        @args.each do |a|
+        args.each do |a|
           flags << a if flag? a
         end
         flags
       end
-
-      private
 
       def flag?(option)
         option =~ /^-[\w]$/ || option =~ /^--[\w][\w-]+$/

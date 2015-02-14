@@ -15,19 +15,13 @@ module Raph
     #   '-h' '-h=' 'h=' '=' '--config='
     #
     class AssignmentParser < BaseParser
-      def initialize(args)
-        @args = args
-      end
-
-      def parse
+      def parse(args)
         assgs = []
-        @args.each do |a|
+        args.each do |a|
           assgs << a if assignment? a
         end
         assgs
       end
-
-      private
 
       def assignment?(option)
         option.include?('=')\

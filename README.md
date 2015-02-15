@@ -88,7 +88,7 @@ raph = Raph::Raph.new.tap do |r|
 end
 
 # Raph#animals attribute is added dynamically.
-# It is defined by AnimalParserr#id method.
+# It is defined by AnimalParser#id method.
 puts "All:        #{raph.all}"
 puts "My animals: #{raph.animals}"
 

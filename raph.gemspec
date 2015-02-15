@@ -9,7 +9,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Vitalii Elenhaupt']
   spec.email         = ['velenhaupt@gmail.com']
   spec.summary       = 'Ruby Argument Parsing for Humans.'
-  spec.description   = 'Simple argument parser.'
+  spec.description   = <<-DESC
+    Lightweight argument parsing with flexible structure.
+    Add your parser in few minutes.
+  DESC
   spec.homepage      = 'https://github.com/veelenga/raph'
   spec.license       = 'MIT'
 

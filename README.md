@@ -1,10 +1,8 @@
 # raph [![Gem Version](https://badge.fury.io/rb/raph.svg)](https://rubygems.org/gems/raph) [![Build Status](https://api.travis-ci.org/veelenga/raph.svg?branch=master)](https://travis-ci.org/veelenga/raph)
 
-![This is Raph]
-(http://upload.wikimedia.org/wikipedia/en/5/58/TMNTRaphael2012.png)
+![This is Raph](http://upload.wikimedia.org/wikipedia/en/5/58/TMNTRaphael2012.png)
 
 **R**uby **A**rgument **P**arsing for **H**umans
-
 
 Inspired by [args](https://github.com/kennethreitz/args)
 
@@ -69,7 +67,6 @@ include Raph
 class AnimalParser < BaseParser
   ANIMALS = ['cat', 'dog', 'pig', 'bear', 'elephant']
 
-  # Here we define dynamic attribute name.
   def id
     :animals
   end
@@ -87,18 +84,15 @@ args = [ '--my-animals', 'cat', 'bird', 'dog', 'elephant' ]
 
 raph = Raph::Raph.new.tap do |r|
   r.add_parser( AnimalParser.new )
-  r.add_parser( FlagParser.new )
   r.parse( args )
 end
 
-# Raph#flags and Raph#animals attributes are dynamically
-# added. Both are defined by Parser#id method.
+# Raph#animals attribute is added dynamically.
+# It is defined by AnimalParserr#id method.
 puts "All:        #{raph.all}"
-puts "Flags:      #{raph.flags}"
 puts "My animals: #{raph.animals}"
 
 #All:        ["--my-animals", "cat", "bird", "dog", "elephant"]
-#Flags:      ["--my-animals"]
 #My animals: ["cat", "dog", "elephant"]
 
 ```

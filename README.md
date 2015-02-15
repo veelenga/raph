@@ -1,4 +1,4 @@
-# raph [![Build Status](https://api.travis-ci.org/veelenga/raph.svg?branch=master)](https://travis-ci.org/veelenga/raph)
+# raph [![Gem Version](https://badge.fury.io/rb/raph.svg)](https://rubygems.org/gems/raph) [![Build Status](https://api.travis-ci.org/veelenga/raph.svg?branch=master)](https://travis-ci.org/veelenga/raph)
 
 ![This is Raph]
 (http://upload.wikimedia.org/wikipedia/en/5/58/TMNTRaphael2012.png)

@@ -1,5 +1,6 @@
 require 'raph'
 
-puts "Flags: #{$raph.flags}"
-puts "Assignments: #{$raph.assignments}"
-puts "Files detected: #{$raph.files}"
+puts "Arguments passed in:  #{$raph.all}"
+puts "Flags detected:       #{$raph.flags}"
+puts "Files detected:       #{$raph.files}"
+puts "Assignments detected: #{$raph.assignments}"

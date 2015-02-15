@@ -1,21 +1,109 @@
-[![Build Status](https://api.travis-ci.org/veelenga/raph.svg?branch=master)](https://travis-ci.org/veelenga/raph)
+# raph [![Build Status](https://api.travis-ci.org/veelenga/raph.svg?branch=master)](https://travis-ci.org/veelenga/raph)
 
-# raph
-
-![It's Raph]
+![This is Raph]
 (http://upload.wikimedia.org/wikipedia/en/5/58/TMNTRaphael2012.png)
 
 **R**uby **A**rgument **P**arsing for **H**umans
 
+
 Inspired by [args](https://github.com/kennethreitz/args)
 
-Main features:
-=============
+## Installation:
 
-Installation:
-=============
+`$ gem install raph`
 
-Usage:
-=============
 
+## Usage:
+
+Here is application sample:
+
+```ruby
+# sample.rb
+require 'raph'
+
+puts "Arguments passed in:  #{$raph.all}"
+puts "Flags detected:       #{$raph.flags}"
+puts "Files detected:       #{$raph.files}"
+puts "Assignments detected: #{$raph.assignments}"
+```
+
+If you do not pass any arguments:
+
+```sh
+$ ruby sample.rb
+Arguments passed in:  []
+Flags detected:       []
+Files detected:       []
+Assignments detected: []
+```
+
+If you have few arguments passed:
+
+```sh
+$ ruby sample.rb -v --flag1 --flag2 --formatter=simple --convert=true
+Arguments passed in:  ["-v", "--flag1", "--flag2", "--formatter=simple", "--convert=true"]
+Flags detected:       ["-v", "--flag1", "--flag2"]
+Files detected:       []
+Assignments detected: ["--formatter=simple", "--convert=true"]
+```
+
+And finnaly if you pass expanded arguments:
+
+```sh
+$ ruby sample.rb -f spec/*.rb
+Arguments passed in:  ["-f", "spec/raph_spec.rb", "spec/spec_helper.rb"]
+Flags detected:       ["-f"]
+Files detected:       ["spec/raph_spec.rb", "spec/spec_helper.rb"]
+Assignments detected: []
+```
+
+## Advanced usage:
+
+You can use `raph` with custom parsers. For example:
+
+```ruby
+require 'raph'
+
+include Raph
+
+class AnimalParser < BaseParser
+  ANIMALS = ['cat', 'dog', 'pig', 'bear', 'elephant']
+
+  # Here we define dynamic attribute name.
+  def id
+    :animals
+  end
+
+  def parse(args)
+    animals = []
+    args.each do |arg|
+      animals << arg if ANIMALS.include? arg.strip.downcase
+    end
+    animals
+  end
+end
+
+args = [ '--my-animals', 'cat', 'bird', 'dog', 'elephant' ]
+
+raph = Raph::Raph.new.tap do |r|
+  r.add_parser( AnimalParser.new )
+  r.add_parser( FlagParser.new )
+  r.parse( args )
+end
+
+# Raph#flags and Raph#animals attributes are dynamically
+# added. Both are defined by Parser#id method.
+puts "All:        #{raph.all}"
+puts "Flags:      #{raph.flags}"
+puts "My animals: #{raph.animals}"
+
+#All:        ["--my-animals", "cat", "bird", "dog", "elephant"]
+#Flags:      ["--my-animals"]
+#My animals: ["cat", "dog", "elephant"]
+
+```
+
+## TODO:
+ - Grouped arguments parser.
+ - Not-files parser.
 

@@ -16,17 +16,22 @@ module Raph
     #
     class AssignmentParser < BaseParser
       def parse(args)
-        assgs = []
+        assgs = {}
         args.each do |a|
-          assgs << a if assignment? a
+          if assignment? a
+            kv = a.split('=')
+            k = to_underscored_sym(kv.first)
+            v = kv.last
+            assgs[k] = v
+          end
         end
         assgs
       end
 
       def assignment?(option)
-        option.include?('=')\
-        && !option.start_with?('=')\
-        && !option.end_with?('=')
+        option.count('=') == 1 &&
+          !option.start_with?('=') &&
+          !option.end_with?('=')
       end
     end
   end

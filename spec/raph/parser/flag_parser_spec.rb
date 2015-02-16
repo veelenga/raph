@@ -12,7 +12,7 @@ module Raph
       describe '#parse' do
         it 'returns flags only' do
           expect(subject.parse(['-h', '-9', '123', '--config', 'config.xml'])).
-            to match_array(['-h', '-9', '--config'])
+            to match_array([:h, :'9', :config])
         end
 
         it 'has no flags here' do

@@ -11,14 +11,13 @@ module Raph
 
       describe '#parse' do
         it 'returns assignments only' do
-          expect(subject.parse(['-h', '-on=20', '--two=my-file'])).
-            to match_array(['-on=20', '--two=my-file'])
+          parsed = subject.parse(['-h', '-on=20', '--two=my-file'])
+          expect(parsed).to include(:on => '20', :two => 'my-file')
         end
 
         it 'has no to return assignments here' do
-          expect(subject.parse(['-h', 'file', '=', '123'])).
-            to match_array([])
-          expect(subject.parse([])).to match_array([])
+          expect(subject.parse(['-h', 'file', '=', '123'])).to be_empty
+          expect(subject.parse([])).to be_empty
         end
       end
 
@@ -31,7 +30,6 @@ module Raph
           expect(ass? 'h=one').to be true
           expect(ass? '-ass=two').to be true
           expect(ass? '--ass=two').to be true
-          expect(ass? 'ass=one=two').to be true
         end
 
         it 'is not as assignment' do
@@ -39,6 +37,7 @@ module Raph
           expect(ass? '-h=').to be false
           expect(ass? 'h=').to be false
           expect(ass? '=').to be false
+          expect(ass? '-h=one=two').to be false
         end
       end
     end

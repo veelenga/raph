@@ -40,9 +40,9 @@ If you have few arguments passed:
 ```sh
 $ ruby sample.rb -v --flag1 --flag2 --formatter=simple --convert=true
 Arguments passed in:  ["-v", "--flag1", "--flag2", "--formatter=simple", "--convert=true"]
-Flags detected:       ["-v", "--flag1", "--flag2"]
+Flags detected:       [:v, :flag1, :flag2]
 Files detected:       []
-Assignments detected: ["--formatter=simple", "--convert=true"]
+Assignments detected: {:formatter=>"simple", :convert=>"true"}
 ```
 
 And finnaly if you pass expanded arguments:
@@ -50,9 +50,9 @@ And finnaly if you pass expanded arguments:
 ```sh
 $ ruby sample.rb -f spec/*.rb
 Arguments passed in:  ["-f", "spec/raph_spec.rb", "spec/spec_helper.rb"]
-Flags detected:       ["-f"]
+Flags detected:       [:f]
 Files detected:       ["spec/raph_spec.rb", "spec/spec_helper.rb"]
-Assignments detected: []
+Assignments detected: {}
 ```
 
 ## Advanced usage:

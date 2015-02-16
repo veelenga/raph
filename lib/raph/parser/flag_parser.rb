@@ -18,7 +18,7 @@ module Raph
       def parse(args)
         flags = []
         args.each do |a|
-          flags << a if flag? a
+          flags << to_underscored_sym(a) if flag? a
         end
         flags
       end

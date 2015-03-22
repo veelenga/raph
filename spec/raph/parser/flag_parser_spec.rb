@@ -23,7 +23,7 @@ module Raph
 
       describe '#flag?' do
         def flag?(option)
-          !subject.flag?(option).nil?
+          subject.flag?(option)
         end
 
         it 'is a flag' do

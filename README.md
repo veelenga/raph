@@ -23,6 +23,7 @@ puts "Arguments passed in:  #{$raph.all}"
 puts "Flags detected:       #{$raph.flags}"
 puts "Files detected:       #{$raph.files}"
 puts "Assignments detected: #{$raph.assignments}"
+puts "Grouped arguments:    #{$raph.grouped_args}"
 ```
 
 If you do not pass any arguments:
@@ -32,17 +33,19 @@ $ ruby sample.rb
 Arguments passed in:  []
 Flags detected:       []
 Files detected:       []
-Assignments detected: []
+Assignments detected: {}
+Grouped arguments:    {}
 ```
 
 If you have few arguments passed:
 
 ```sh
-$ ruby sample.rb -v --flag1 --flag2 --formatter=simple --convert=true
-Arguments passed in:  ["-v", "--flag1", "--flag2", "--formatter=simple", "--convert=true"]
+$ ruby sample.rb -v 1 2 3 --flag1 3 --flag2 --formatter=simple true
+Arguments passed in:  ["-v", "1", "2", "3", "--flag1", "3", "--flag2", "--formatter=simple", "true"]
 Flags detected:       [:v, :flag1, :flag2]
 Files detected:       []
-Assignments detected: {:formatter=>"simple", :convert=>"true"}
+Assignments detected: {:formatter=>"simple"}
+Grouped argumentes:   {:v=>["1", "2", "3"], :flag1=>["3"], :flag2=>[], :"formatter=simple"=>["true"]}
 ```
 
 And finnaly if you pass expanded arguments:
@@ -53,6 +56,7 @@ Arguments passed in:  ["-f", "spec/raph_spec.rb", "spec/spec_helper.rb"]
 Flags detected:       [:f]
 Files detected:       ["spec/raph_spec.rb", "spec/spec_helper.rb"]
 Assignments detected: {}
+Grouped argumentes:   {:f=>["spec/raph_spec.rb", "spec/spec_helper.rb"]}
 ```
 
 ## Advanced usage:
@@ -96,8 +100,3 @@ puts "My animals: #{raph.animals}"
 #My animals: ["cat", "dog", "elephant"]
 
 ```
-
-## TODO:
- - Grouped arguments parser.
- - Not-files parser.
-

@@ -1,6 +1,7 @@
 require 'raph/parser/file_parser'
 require 'raph/parser/flag_parser'
 require 'raph/parser/assignment_parser'
+require 'raph/parser/grouped_arg_parser'
 
 module Raph
   #
@@ -102,6 +103,7 @@ module Raph
     r.add_parser(FileParser.new)
     r.add_parser(FlagParser.new)
     r.add_parser(AssignmentParser.new)
+    r.add_parser(GroupedArgParser.new)
 
     r.parse(ARGV)
   end

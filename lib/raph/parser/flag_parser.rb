@@ -24,7 +24,7 @@ module Raph
       end
 
       def flag?(option)
-        option =~ /^-[\w]$/ || option =~ /^--[\w][\w-]+$/
+        !!(option =~ /^-[\w]$/ || option =~ /^--[\w][\w-]+$/)
       end
     end
   end

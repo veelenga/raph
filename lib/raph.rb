@@ -72,8 +72,9 @@ module Raph
     end
 
     def method_missing(method_sym, *arguments, &block)
-      # TODO: do not accept any arguments or block
       if has_attribute? method_sym
+        raise 'Arguments not applicable' if arguments.length > 0
+        raise 'Block not applicable' if block_given?
         get_attribute_value method_sym
       else
         super

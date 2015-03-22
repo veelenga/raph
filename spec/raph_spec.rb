@@ -2,26 +2,25 @@ require 'spec_helper'
 require 'fileutils'
 
 module Raph
-  describe Raph do
+  class NumberParser
+    attr_accessor :id, :max
 
-    class NumberParser
-      attr_accessor :id, :max
-
-      def initialize(id, max=100)
-        @id = id
-        @max = max
-      end
-
-      def parse(args)
-        args.select { |x| x <= max }
-      end
+    def initialize(id, max=100)
+      @id = id
+      @max = max
     end
 
-    describe '#parse' do
-      let (:numbers) { (1..100) }
-      let (:parser1) { NumberParser.new(:first, 5) }
-      let (:parser2) { NumberParser.new(:second, 6) }
+    def parse(args)
+      args.select { |x| x <= max }
+    end
+  end
 
+  describe Raph do
+    let (:numbers) { (1..100) }
+    let (:parser1) { NumberParser.new(:first, 5) }
+    let (:parser2) { NumberParser.new(:second, 6) }
+
+    describe '#parse' do
       it 'should parse nothing if parsers not added' do
         raph = Raph.new.tap { |r| r.parse numbers }
         expect(raph.all).to match_array numbers
@@ -36,6 +35,29 @@ module Raph
         expect(raph.all).to match_array numbers
         expect(raph.send(parser1.id)).to match_array (1..parser1.max)
         expect(raph.send(parser2.id)).to match_array (1..parser2.max)
+      end
+    end
+
+    describe '#method_missing' do
+      it 'should throw when argument passed' do
+        raph = Raph.new.tap do |r|
+          r.add_parser(parser1)
+          r.parse(numbers)
+        end
+        expect{ raph.send(parser1.id, 'argument') }.to raise_error
+      end
+
+      it 'should throw when block passed' do
+        raph = Raph.new.tap do |r|
+          r.add_parser(parser1)
+          r.parse(numbers)
+        end
+        expect{ raph.send(parser1.id) { 'my block' } }.to raise_error
+      end
+
+      it 'should throw when wrong id given' do
+        raph = Raph.new.tap { |r| r.parse numbers }
+        expect{ raph.send(:wrong_id) }.to raise_error
       end
     end
   end

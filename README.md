@@ -45,7 +45,7 @@ Arguments passed in:  ["-v", "1", "2", "3", "--flag1", "3", "--flag2", "--format
 Flags detected:       [:v, :flag1, :flag2]
 Files detected:       []
 Assignments detected: {:formatter=>"simple"}
-Grouped argumentes:   {:v=>["1", "2", "3"], :flag1=>["3"], :flag2=>[], :"formatter=simple"=>["true"]}
+Grouped arguments:    {:v=>["1", "2", "3"], :flag1=>["3"], :flag2=>[], :"formatter=simple"=>["true"]}
 ```
 
 And finnaly if you pass expanded arguments:
@@ -56,7 +56,7 @@ Arguments passed in:  ["-f", "spec/raph_spec.rb", "spec/spec_helper.rb"]
 Flags detected:       [:f]
 Files detected:       ["spec/raph_spec.rb", "spec/spec_helper.rb"]
 Assignments detected: {}
-Grouped argumentes:   {:f=>["spec/raph_spec.rb", "spec/spec_helper.rb"]}
+Grouped arguments:    {:f=>["spec/raph_spec.rb", "spec/spec_helper.rb"]}
 ```
 
 ## Advanced usage:

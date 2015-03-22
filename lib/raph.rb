@@ -3,13 +3,52 @@ require 'raph/parser/flag_parser'
 require 'raph/parser/assignment_parser'
 
 module Raph
-  # TODO: class description
+  #
+  # Ruby Argument Parser for Humans.
+  # Parses arguments using external parsers.
+  #
+  #   class Parser1 < BaseParser
+  #     def id
+  #       'parser1_result'
+  #     end
+  #
+  #     def parse(arg)
+  #       # return your parsed arguments
+  #     end
+  #   end
+  #
+  #   class Parser2 < Base
+  #     def id
+  #       'parser2_result'
+  #     end
+  #
+  #     def parse(arg)
+  #       # return your parsed arguments
+  #     end
+  #   end
+  #
+  #   raph = Raph.new.tap do |r|
+  #     r.add_parser(Parser1.new)
+  #     r.add_parser(Parser2.new)
+  #     # ...
+  #
+  #     r.parse (arguments)
+  #   end
+  #
+  #   puts raph.parser1_result # parsed arguments by Parser1
+  #   puts raph.parser2_result # parsed arguments by Parser2
   class Raph
+    #
+    # Initializes Raph.
     def initialize
       @parsed = {}
       @parsers = []
     end
 
+    #
+    # Parses arguments using external parsers.
+    #
+    # +args+:: arguments to be parsed.
     def parse(args)
       @all = args.dup
 
@@ -18,10 +57,16 @@ module Raph
       end
     end
 
+    #
+    # Returns all arguments.
     def all
       @all.dup
     end
 
+    #
+    # Adds new external parser to parser list.
+    #
+    # +parser+:: external parser.
     def add_parser(parser)
       @parsers.push parser
     end
@@ -37,12 +82,14 @@ module Raph
 
     private
 
-    # Returns true if this class has dynamic argument 'arg'
+    #
+    # Returns true if this class has dynamic argument +arg+.
     def has_attribute?(arg)
       @parsed.include? arg
     end
 
-    # Returns value of dynamic argument 'arg'
+    #
+    # Returns value of dynamic argument +arg+
     def get_attribute_value(arg)
       @parsed[arg]
     end
@@ -58,4 +105,3 @@ module Raph
     r.parse(ARGV)
   end
 end
-

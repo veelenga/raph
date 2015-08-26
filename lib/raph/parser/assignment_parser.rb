@@ -16,16 +16,11 @@ module Raph
     #
     class AssignmentParser < BaseParser
       def parse(args)
-        assgs = {}
-        args.each do |a|
-          if assignment? a
-            kv = a.split('=')
-            k = to_underscored_sym(kv.first)
-            v = kv.last
-            assgs[k] = v
-          end
+        args.each_with_object({}) do |a, assgs|
+          next unless assignment? a
+          k, v = a.split('=')
+          assgs[to_underscored_sym(k)] = v
         end
-        assgs
       end
 
       def assignment?(option)

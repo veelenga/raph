@@ -16,15 +16,13 @@ module Raph
     #   'option' '---option2' '--h'
     class FlagParser < BaseParser
       def parse(args)
-        flags = []
-        args.each do |a|
+        args.each_with_object([]) do |a, flags|
           flags << to_underscored_sym(a) if flag? a
         end
-        flags
       end
 
       def flag?(option)
-        !!(option =~ /^-[\w]$/ || option =~ /^--[\w][\w-]+$/)
+        !(option !~ /^-\w$|^--\w[\w-]+/)
       end
     end
   end

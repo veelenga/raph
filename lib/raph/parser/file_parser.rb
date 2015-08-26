@@ -13,11 +13,9 @@ module Raph
     #             that are in this directory with extension 'xml'
     class FileParser < BaseParser
       def parse(args)
-        files = []
-        args.each do |a|
+        args.uniq.each_with_object([]) do |a, files|
           files.concat Dir[a]
         end
-        files.uniq
       end
     end
   end

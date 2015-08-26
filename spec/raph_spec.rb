@@ -16,14 +16,14 @@ module Raph
   end
 
   describe Raph do
-    let (:numbers) { (1..100) }
-    let (:parser1) { NumberParser.new(:first, 5) }
-    let (:parser2) { NumberParser.new(:second, 6) }
+    let(:numbers) { (1..100) }
+    let(:parser1) { NumberParser.new(:first, 5) }
+    let(:parser2) { NumberParser.new(:second, 6) }
 
     describe '#parse' do
       it 'should parse nothing if parsers not added' do
         raph = Raph.new.tap { |r| r.parse numbers }
-        expect(raph.all).to match_array numbers
+        expect(raph.all.to_a).to match_array numbers.to_a
       end
 
       it 'should have correspoding attribute if parser added' do
@@ -32,9 +32,9 @@ module Raph
           r.add_parser(parser2)
           r.parse(numbers)
         end
-        expect(raph.all).to match_array numbers
-        expect(raph.send(parser1.id)).to match_array (1..parser1.max)
-        expect(raph.send(parser2.id)).to match_array (1..parser2.max)
+        expect(raph.all.to_a).to match_array numbers
+        expect(raph.send(parser1.id).to_a).to match_array (1..parser1.max)
+        expect(raph.send(parser2.id).to_a).to match_array (1..parser2.max)
       end
     end
 
@@ -44,7 +44,7 @@ module Raph
           r.add_parser(parser1)
           r.parse(numbers)
         end
-        expect{ raph.send(parser1.id, 'argument') }.to raise_error
+        expect{ raph.send(parser1.id, 'argument') }.to raise_error ArgumentError, 'Arguments not applicable'
       end
 
       it 'should throw when block passed' do
@@ -52,12 +52,12 @@ module Raph
           r.add_parser(parser1)
           r.parse(numbers)
         end
-        expect{ raph.send(parser1.id) { 'my block' } }.to raise_error
+        expect{ raph.send(parser1.id) { 'my block' } }.to raise_error ArgumentError, 'Block not applicable'
       end
 
       it 'should throw when wrong id given' do
         raph = Raph.new.tap { |r| r.parse numbers }
-        expect{ raph.send(:wrong_id) }.to raise_error
+        expect{ raph.send(:wrong_id) }.to raise_error NoMethodError
       end
     end
   end

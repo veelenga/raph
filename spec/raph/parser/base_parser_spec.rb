@@ -38,8 +38,8 @@ module Raph
       end
 
       describe '#parse' do
-        it 'returns args' do
-          expect(subject.parse [1, 2, 3]).to be nil
+        it 'should be implemented in descendant class' do
+          expect { subject.parse [1, 2, 3] }.to raise_error NotImplementedError
         end
       end
     end

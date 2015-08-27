@@ -20,10 +20,9 @@ module Raph
       end
 
       def parse(args)
-        groups = {}
         current_group = nil
 
-        args.each do |arg|
+        args.each_with_object({}) do |arg, groups|
           if group? arg
             current_group = to_underscored_sym arg
             groups[current_group] = []
@@ -31,7 +30,6 @@ module Raph
             groups[current_group].push(arg) if current_group
           end
         end
-        groups
       end
 
       def group?(arg)

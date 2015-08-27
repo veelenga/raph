@@ -54,7 +54,7 @@ module Raph
       @all = args.dup
 
       @parsers.each do |p|
-        @parsed[p.id.to_sym] = p.parse(@all)
+        @parsed[p.id] = p.parse(@all)
       end
     end
 
@@ -70,30 +70,11 @@ module Raph
     # +parser+:: external parser.
     def add_parser(parser)
       @parsers.push parser
-    end
-
-    def method_missing(method_sym, *arguments, &block)
-      if has_attribute? method_sym
-        raise 'Arguments not applicable' if arguments.length > 0
-        raise 'Block not applicable' if block_given?
-        get_attribute_value method_sym
-      else
-        super
+      define_singleton_method(parser.id) do |*args, &block|
+        raise ArgumentError, 'Arguments not applicable' if args.any?
+        raise ArgumentError, 'Block not applicable' if block
+        @parsed[parser.id]
       end
-    end
-
-    private
-
-    #
-    # Returns true if this class has dynamic argument +arg+.
-    def has_attribute?(arg)
-      @parsed.include? arg
-    end
-
-    #
-    # Returns value of dynamic argument +arg+
-    def get_attribute_value(arg)
-      @parsed[arg]
     end
   end
 

@@ -30,7 +30,11 @@ module Raph
       # Returns underscored symbol of string
       # (snake case format).
       def to_underscored_sym(str)
-        str.sub(/^-+/, '').gsub(/([A-Z\d]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/,'\1_\2').tr('-', '_').downcase.to_sym
+        str.sub(/^-+/, '').
+          gsub(/([A-Z\d]+)([A-Z][a-z])/, '\1_\2').
+          gsub(/([a-z\d])([A-Z])/, '\1_\2').
+          tr('-', '_').
+          downcase.to_sym
       end
     end
   end
